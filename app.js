@@ -1,3 +1,8 @@
+
+const http = require ('http');
+const querystring = require ('querystring');
+
+
 const colors = [
     { variant: "Vermillion", hex: "#2E191B" },
     { variant: "Forest", hex: "#0B6623" },
@@ -15,3 +20,30 @@ const colors = [
     { variant: "Maroon", hex: "#800000" },
     { variant: "Coral", hex: "#FF7F50" }
 ];
+
+const server = http.createServer((req, res) =>{
+    console.log('Petición a la URl: ', req.url);
+    res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+    
+    if(req.url.startsWith('/color')){
+        function getRandomElement(arr) {
+            const randomIndex = Math.floor(Math.random() * arr.length);
+            return arr[randomIndex];
+            
+        }
+        const randomColor = getRandomElement(colors)
+        res.write(`<h1 style = "color: ${randomColor.hex}">${randomColor.hex}</h1>`);
+        res.end();
+    }else{  
+        res.write('<h1>Bienvenido</h1>');
+        res.write('<p>Haz una petición....');
+        res.end();
+    }
+    
+
+
+})
+
+server.listen(3000, () => {
+    console.log('El servidr está corriendo');
+})
