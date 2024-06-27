@@ -22,6 +22,8 @@ const colors = [
 const http = require('http');
 const fs = require('fs');
 const querystring = require('querystring');
+const _ = require ('lodash');
+
 
 // Creamos servidor y lo asigno a una variable
 const server = http.createServer((req, res) => {
@@ -51,8 +53,7 @@ const server = http.createServer((req, res) => {
         else{
             res.write(`El color ${qs.variant} no existe. Te muestro un color al azar`)
             // obtener un color aleatório
-            const indexRandomColor = Math.floor(Math.random() * colors.length);
-            const randomColor = colors[indexRandomColor];
+            const randomColor = _.sample(colors);
 
             const { hex } = randomColor;
             res.write(`<p style="color: ${hex}">${hex}</p>`)
@@ -66,8 +67,7 @@ const server = http.createServer((req, res) => {
         // Iteración 3: Comprobar si me han pasado una queryString o no. En caso de que si: obtener el color en función del ?variant=Vermillion. En caso contrario obtener un color aleatório
 
         // obtener un color aleatório
-        const indexRandomColor = Math.floor(Math.random() * colors.length);
-        const randomColor = colors[indexRandomColor];
+        const randomColor = _.sample(colors);
 
         // me quedo con la propiedad .hex del color
         const { hex } = randomColor;
